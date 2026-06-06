@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Oracle Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --black:#0a0a0c;
+    --charcoal:#141317;
+    --panel:#16151a;
+    --gold:#c2a05a;        /* aged brass, not yellow */
+    --gold-soft:#9c8047;
+    --oxblood:#6e2730;
+    --parchment:#efe7d6;
+    --muted:#c7bda9;
+    --line:#34313a;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--black);
+    color:var(--parchment);
+    font-family:'Inter',system-ui,sans-serif;
+    font-weight:400;
+    font-size:18px;
+    line-height:1.78;
+    -webkit-font-smoothing:antialiased;
+    letter-spacing:.005em;
+  }
+  /* film grain over everything */
+  body::after{
+    content:"";
+    position:fixed;inset:0;
+    pointer-events:none;
+    z-index:9999;
+    opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .wrap{max-width:620px;margin:0 auto;padding:0 26px;}
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:92vh;
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:flex-end;
+    text-align:center;
+    overflow:hidden;
+    padding-bottom:8vh;
+  }
+  .hero-media{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(60% 50% at 50% 28%, rgba(110,39,48,.18), transparent 70%),
+      #060607;
+  }
+  .hero-media img{
+    width:100%;height:100%;
+    object-fit:cover;
+    object-position:50% 42%;
+    /* moody candlelit treatment applied to whatever hands photo is dropped in */
+    filter:grayscale(.28) sepia(.32) saturate(.85) contrast(1.06) brightness(.72);
+    mix-blend-mode:luminosity;
+    opacity:.92;
+  }
+  .hero-media::after{
+    content:"";position:absolute;inset:0;
+    background:
+      linear-gradient(180deg, rgba(6,6,7,.55) 0%, rgba(6,6,7,.15) 35%, rgba(6,6,7,.65) 78%, var(--black) 100%),
+      radial-gradient(70% 60% at 50% 38%, rgba(194,160,90,.12), transparent 65%);
+  }
+  .hero-inner{position:relative;z-index:2;padding:0 24px;}
+  .kicker{
+    font-family:'Inter',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.42em;
+    font-size:11px;
+    color:var(--gold);
+    margin:0 0 22px;
+    font-weight:400;
+  }
+  h1{
+    font-family:'Fraunces',Georgia,serif;
+    font-weight:500;
+    font-size:clamp(52px,11vw,92px);
+    line-height:.98;
+    letter-spacing:.01em;
+    margin:0 0 22px;
+    color:var(--parchment);
+  }
+  .hero .sub{
+    font-family:'Fraunces',Georgia,serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:clamp(20px,3.4vw,26px);
+    color:var(--muted);
+    margin:0;
+    line-height:1.35;
+  }
+  .scrollcue{margin-top:40px;color:var(--gold-soft);font-size:22px;animation:bob 2.4s ease-in-out infinite;}
+  @keyframes bob{0%,100%{transform:translateY(0);opacity:.6;}50%{transform:translateY(6px);opacity:1;}}
+  /* ---------- SECTIONS ---------- */
+  section{padding:64px 0;}
+  .glyph{
+    text-align:center;color:var(--gold-soft);
+    font-size:15px;letter-spacing:.5em;
+    margin:8px 0;opacity:.7;
+  }
+  hr.hair{border:0;border-top:1px solid var(--line);max-width:620px;margin:0 auto;}
+  h2{
+    font-family:'Fraunces',Georgia,serif;
+    font-weight:500;
+    font-size:clamp(30px,5.5vw,42px);
+    line-height:1.08;
+    letter-spacing:.01em;
+    margin:0 0 26px;
+    color:var(--parchment);
+  }
+  p{margin:0 0 22px;}
+  p:last-child{margin-bottom:0;}
+  strong{color:var(--gold);font-weight:500;}
+  .lead{font-size:20px;}
+  .pivot{
+    font-family:'Fraunces',Georgia,serif;
+    font-weight:500;
+    font-size:clamp(26px,5vw,34px);
+    line-height:1.2;
+    color:var(--gold);
+    text-align:center;
+  }
+  .muted{color:var(--muted);}
+  /* ---------- THE EIGHT ---------- */
+  .terms-intro{color:var(--muted);margin-bottom:8px;}
+  .eight{margin-top:40px;}
+  .item{
+    display:grid;
+    grid-template-columns:34px 1fr;
+    gap:0 20px;
+    padding:30px 0;
+    border-top:1px solid var(--line);
+    align-items:start;
+  }
+  .item:first-child{border-top:0;}
+  .item input[type=checkbox]{
+    appearance:none;-webkit-appearance:none;
+    width:26px;height:26px;
+    border:1.5px solid var(--gold-soft);
+    background:transparent;
+    border-radius:2px;
+    cursor:pointer;position:relative;
+    margin-top:6px;flex:none;
+    transition:background .15s,border-color .15s;
+  }
+  .item input[type=checkbox]:hover{border-color:var(--gold);}
+  .item input[type=checkbox]:checked{background:var(--gold);border-color:var(--gold);}
+  .item input[type=checkbox]:checked::after{
+    content:"";position:absolute;left:8px;top:3px;
+    width:6px;height:12px;border:solid var(--black);
+    border-width:0 2.5px 2.5px 0;transform:rotate(45deg);
+  }
+  .item .n{
+    font-family:'Fraunces',serif;
+    color:var(--gold);font-size:15px;font-style:italic;
+    display:block;margin-bottom:6px;letter-spacing:.05em;
+  }
+  .item .t{
+    font-family:'Fraunces',Georgia,serif;
+    font-weight:500;font-size:22px;line-height:1.25;
+    color:var(--parchment);display:block;margin-bottom:10px;cursor:pointer;
+  }
+  .item p{color:#d8cebc;font-size:16.5px;line-height:1.7;margin:0;}
+  /* ---------- FORM ---------- */
+  .formwrap{max-width:620px;margin:0 auto;}
+  form{margin-top:8px;}
+  label.field{
+    display:block;
+    text-transform:uppercase;letter-spacing:.26em;
+    font-size:11px;color:var(--gold);
+    margin:26px 0 10px;font-weight:400;
+  }
+  input[type=text],input[type=email],input[type=number],textarea{
+    width:100%;
+    background:var(--charcoal);
+    border:1px solid var(--line);
+    padding:15px 16px;
+    color:var(--parchment);
+    font-family:'Inter',sans-serif;font-size:17px;
+    border-radius:2px;transition:border-color .2s;
+  }
+  input:focus,textarea:focus{outline:none;border-color:var(--gold);}
+  textarea{min-height:104px;resize:vertical;}
+  input::placeholder,textarea::placeholder{color:#5f5a52;}
+  .radios{display:flex;flex-wrap:wrap;gap:10px;}
+  .radio{
+    border:1px solid var(--line);background:var(--charcoal);
+    padding:12px 18px;border-radius:2px;cursor:pointer;
+    font-family:'Fraunces',serif;font-size:17px;
+    display:flex;align-items:center;gap:9px;user-select:none;transition:border-color .2s;
+  }
+  .radio:hover{border-color:var(--gold-soft);}
+  .radio input{accent-color:var(--gold);width:14px;height:14px;}
+  .g{color:#5f9e6a;} .y{color:#cdab53;} .o{color:#cf7a3e;} .r{color:#c0524c;} .b{color:#6c93c4;}
+  .enter{
+    width:100%;margin-top:38px;
+    background:var(--gold);color:#15120b;
+    border:0;padding:24px;border-radius:2px;
+    font-family:'Fraunces',Georgia,serif;font-weight:600;
+    font-size:22px;letter-spacing:.04em;cursor:pointer;
+    transition:opacity .2s,box-shadow .2s,transform .1s;
+  }
+  .enter:hover:not(:disabled){box-shadow:0 0 28px rgba(194,160,90,.35);}
+  .enter:active:not(:disabled){transform:translateY(1px);}
+  .enter:disabled{
+    background:transparent;color:var(--muted);
+    border:1px solid var(--line);cursor:not-allowed;
+  }
+  .gatehint{
+    text-align:center;color:var(--muted);font-style:italic;
+    font-family:'Fraunces',serif;font-size:15px;margin-top:16px;
+  }
+  .footnote{
+    text-align:center;color:var(--muted);font-size:13px;
+    letter-spacing:.04em;margin-top:54px;line-height:1.7;padding-bottom:10px;
+  }
+  /* signal + safe word */
+  .signal{margin-top:8px;}
+  .srow{display:grid;grid-template-columns:120px 1fr;gap:0 22px;padding:22px 0;border-top:1px solid var(--line);align-items:start;}
+  .srow:first-child{border-top:0;}
+  .sname{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:24px;line-height:1.1;}
+  .srow p{margin:0;color:#d8cebc;font-size:16.5px;line-height:1.6;}
+  .srow p strong{color:#d28a86;}
+  .combine{margin-top:24px;padding-top:22px;border-top:1px dashed var(--line);color:var(--muted);font-style:italic;font-family:'Fraunces',Georgia,serif;font-size:17px;}
+  .safeword{text-align:center;border:1px solid var(--oxblood);background:linear-gradient(180deg,rgba(110,39,48,.20),rgba(110,39,48,.05));padding:48px 24px;margin-top:8px;border-radius:2px;}
+  .safeword .lbl{text-transform:uppercase;letter-spacing:.34em;font-size:11px;color:var(--gold);margin-bottom:18px;}
+  .safeword .w{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(54px,12vw,92px);line-height:1;color:#c8534c;letter-spacing:.03em;}
+  .safeword .note{margin-top:18px;color:#d8cebc;font-style:italic;font-family:'Fraunces',Georgia,serif;font-size:19px;}
+  @media(max-width:560px){
+    body{font-size:17px;}
+    section{padding:52px 0;}
+    .item{grid-template-columns:26px 1fr;gap:0 16px;}
+    .srow{grid-template-columns:1fr;gap:6px;}
+  }
+</style>
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <header class="hero">
+    <div class="hero-media">
+      <!-- Drop your treated hands photo in this folder as hero-hands.jpg.
+           If the file is missing, the dark/gold gradient below stands in. -->
+      <img src="hero-hands.jpg" alt="" onerror="this.style.display='none'" />
+    </div>
+    <div class="hero-inner">
+      <p class="kicker">By referral &middot; By choice</p>
+      <h1>The Oracle Room</h1>
+      <p class="sub">You've tried a lot. You haven't tried this.</p>
+      <div class="scrollcue">&#8964;</div>
+    </div>
+  </header>
+
+  <!-- ===== PROBLEM ===== -->
+  <section>
+    <div class="wrap">
+      <p class="lead">You've done the therapy, the ceremony, the 5am practice. Like putting out a fire with a better bucket &mdash; but it keeps relighting.</p>
+      <p>Those rooms worked on what they could see. The thing running you learned to stay just out of view.</p>
+    </div>
+  </section>
+
+  <div class="glyph">&#10022;</div>
+
+  <!-- ===== MECHANISM ===== -->
+  <section>
+    <div class="wrap">
+      <p class="pivot">The Oracle Room finds it.</p>
+    </div>
+  </section>
+
+  <section style="padding-top:0;">
+    <div class="wrap">
+      <p>I read you through my Korean shamanic lineage. I see the protectors driving your decisions, your relationships, the reason you're stuck in the same patterns. I name them out loud while you watch it happen in real time. Then I'll tell you how it's showing up in your business and your sex life. Do with that what you will.</p>
+      <p><strong>It'll be confronting. You'll probably want to leave. Stay anyway.</strong></p>
+    </div>
+  </section>
+
+  <hr class="hair" />
+
+  <!-- ===== OFFER ===== -->
+  <section>
+    <div class="wrap">
+      <h2>What you're walking into</h2>
+      <p>A free, live, 90-minute group session. No slides. No curriculum. No performance coaching.</p>
+      <p>I lead. You receive. The managed version of you doesn't get to negotiate the terms. The part that's been keeping you stuck has survived every room that let it. This one doesn't.</p>
+      <p><strong>You leave knowing what's actually been running you.</strong></p>
+    </div>
+  </section>
+
+  <hr class="hair" />
+
+  <!-- ===== QUALIFY ===== -->
+  <section>
+    <div class="wrap">
+      <h2>This isn't for everyone</h2>
+      <p>If you're looking for validation, this is the wrong room. If you need the session to feel good before you'll trust it worked, this is the wrong room. If you're not willing to be seen, this is the wrong room.</p>
+      <p><strong>If you've done everything and something still feels unfinished, you're exactly who this was built for.</strong></p>
+    </div>
+  </section>
+
+  <hr class="hair" />
+
+  <!-- ===== CONSENT SETUP ===== -->
+  <section>
+    <div class="wrap">
+      <h2>Before you register</h2>
+      <p>This room has one requirement. Read what's below, and every line is a f*ck yes before you sign.</p>
+      <p>Not because it's legal paperwork. Because the version of you that shows up tomorrow morning is going to have opinions about tonight. This page is the note you leave yourself before that version wakes up.</p>
+    </div>
+  </section>
+
+  <!-- ===== THE TERMS ===== -->
+  <section style="padding-top:0;">
+    <div class="wrap">
+      <h2>The terms</h2>
+      <p class="terms-intro">You're a grown adult making a grown choice. No fee. No obligation. No arm twisting.</p>
+      <p>If a single one of the eight statements below isn't a f*ck yes, tonight's room isn't yours. Shut the tab. No conversation, no hard feelings.</p>
+
+      <div class="eight">
+        <div class="item">
+          <input type="checkbox" class="affirm" id="c1" />
+          <div><span class="n">i.</span><label for="c1" class="t">I am choosing this.</label><p>Nobody's making me. I can throw the safe word any time. I don't have to defend the choice.</p></div>
+        </div>
+        <div class="item">
+          <input type="checkbox" class="affirm" id="c2" />
+          <div><span class="n">ii.</span><label for="c2" class="t">I am consenting to the container, not a script.</label><p>What happens inside the work is not pre-listed. I'm saying yes to entering the room. The specific moves aren't on the menu in advance and I'm not expecting them to be.</p></div>
+        </div>
+        <div class="item">
+          <input type="checkbox" class="affirm" id="c3" />
+          <div><span class="n">iii.</span><label for="c3" class="t">I will feel something big.</label><p>Pleasure, terror, grief. Sometimes in the same minute. None of those reactions means the work went wrong.</p></div>
+        </div>
+        <div class="item">
+          <input type="checkbox" class="affirm" id="c4" />
+          <div><span class="n">iv.</span><label for="c4" class="t">My public face will come back.</label><p>Hours from now, or tomorrow, my public face comes back. My credentials come back. My board, my partners, my investors will be asking me "you did what?" That's the curve. Ninety to ninety-five of every hundred people don't come back. The ones who do, sometimes years later, are usually glad they did.</p></div>
+        </div>
+        <div class="item">
+          <input type="checkbox" class="affirm" id="c5" />
+          <div><span class="n">v.</span><label for="c5" class="t">I may decide I was forced.</label><p>Later today, or tomorrow, part of me might think "she made me do this." That thought is part of the work. It does not mean I was hurt. I won't put the room on trial for it. I'll sit with the feeling until I can see what it really is.</p></div>
+        </div>
+        <div class="item">
+          <input type="checkbox" class="affirm" id="c6" />
+          <div><span class="n">vi.</span><label for="c6" class="t">Nothing here will physically harm me.</label><p>Like eating a Carolina Reaper. My nervous system will think my head is on fire. It isn't. The neurons fire. The body is fine. Big feelings, no damage.</p></div>
+        </div>
+        <div class="item">
+          <input type="checkbox" class="affirm" id="c7" />
+          <div><span class="n">vii.</span><label for="c7" class="t">Gratitude, if it comes, comes later.</label><p>Weeks. Months. Sometimes years. I'm not here for a good feeling in the next hour. I'm here for what's underneath it.</p></div>
+        </div>
+        <div class="item">
+          <input type="checkbox" class="affirm" id="c8" />
+          <div><span class="n">viii.</span><label for="c8" class="t">This page is the anchor.</label><p>When the public face returns and tells me I was wronged, this page is what we point back to. Not my memory of the moment. I am agreeing now, while I am still me.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="hair" />
+
+  <!-- ===== TRAFFIC LIGHT SYSTEM ===== -->
+  <section>
+    <div class="wrap">
+      <h2>Traffic Light System</h2>
+      <p>One traffic light. That's the entire safety system &mdash; kept deliberately simple, so you never have to think about it under pressure. Call your color out any time.</p>
+      <div class="signal">
+        <div class="srow"><div class="sname g">Green</div><p>Everything's clear. Keep going.</p></div>
+        <div class="srow"><div class="sname y">Yellow</div><p>Pause. I want to keep going &mdash; I just need to slow down, change the intensity, or talk something through first.</p></div>
+        <div class="srow"><div class="sname r">Red</div><p>Stop. Everything, right now. No reason needed, and we don't discuss it &mdash; for any reason. <strong>Red is your safe word.</strong></p></div>
+        <div class="srow"><div class="sname b">Blue</div><p>Checked out &mdash; anywhere from bored to fully gone, &ldquo;I've left my body.&rdquo;</p></div>
+      </div>
+      <p class="combine">You can be more than one at once &mdash; yellow and blue, or red and blue. Name both, and I'll meet you where you actually are.</p>
+    </div>
+  </section>
+
+  <hr class="hair" />
+
+  <!-- ===== SAFE WORD ===== -->
+  <section>
+    <div class="wrap">
+      <h2>The safe word</h2>
+      <p>Nothing to memorize. Your safe word is one color.</p>
+      <div class="safeword">
+        <div class="lbl">Say the word</div>
+        <div class="w">RED</div>
+        <div class="note">and everything stops, that instant &mdash; for any reason, or none.</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="hair" />
+
+  <!-- ===== CLOSE + FORM ===== -->
+  <section>
+    <div class="wrap formwrap">
+      <h2>One last thing</h2>
+      <p>If you read all of that and you're still here, you're probably prepared.</p>
+      <p><strong>Sign below. Show up. Let's see what's actually running you.</strong></p>
+
+      <!--
+        KIT (ConvertKit) WIRING  —  set KIT_FORM_UID in the script block at the bottom.
+        Submissions POST to your Kit form, which applies the "Oracle_Room" tag and
+        triggers the email + Zoom automation. Full steps in SETUP.md.
+      -->
+      <form method="post" id="signForm">
+        <label class="field" for="name">Full name</label>
+        <input type="text" id="name" name="fields[full_name]" required />
+
+        <label class="field" for="email">Email address</label>
+        <input type="email" id="email" name="email_address" required />
+
+        <label class="field">Where you are right now</label>
+        <div class="radios">
+          <label class="radio g">Green<input type="radio" name="fields[state_now]" value="green" /></label>
+          <label class="radio y">Yellow<input type="radio" name="fields[state_now]" value="yellow" /></label>
+          <label class="radio r">Red<input type="radio" name="fields[state_now]" value="red" /></label>
+          <label class="radio b">Blue<input type="radio" name="fields[state_now]" value="blue" /></label>
+        </div>
+
+        <label class="field" for="pct">How present are you? (0&ndash;100)</label>
+        <input type="number" id="pct" name="fields[present_percent]" min="0" max="100" placeholder="e.g. 75" />
+
+        <label class="field" for="notes">Anything else worth flagging (optional)</label>
+        <textarea id="notes" name="fields[notes]" placeholder="Limits, physical things, medication &mdash; whatever helps me see you clearly."></textarea>
+
+        <button type="submit" class="enter" id="enterBtn" disabled>Enter</button>
+        <p class="gatehint" id="gateHint">All eight must be a f*ck yes to enter.</p>
+        <p class="gatehint" id="formError" style="display:none;color:#d28a86;">Something didn't go through. Please try again in a moment.</p>
+      </form>
+
+      <div id="confirm" style="display:none;text-align:center;border:1px solid var(--oxblood);background:linear-gradient(180deg,rgba(110,39,48,.20),rgba(110,39,48,.05));padding:54px 26px;border-radius:2px;">
+        <p class="kicker" style="color:var(--gold);">You're in</p>
+        <h2 style="margin-bottom:18px;">The room knows your name.</h2>
+        <p style="margin:0;">Check your inbox. The email and Zoom link for the next round are on their way. If you don't see it, look in promotions or spam &mdash; then move it to your primary so the next one lands.</p>
+      </div>
+
+      <p class="footnote">The Oracle Room &middot; free &middot; live &middot; 90 minutes &middot; group<br/>This is consent to enter the room &mdash; nothing more, nothing less.</p>
+    </div>
+  </section>
+
+<script>
+  /* =========================================================
+     CONFIG — paste your Kit (ConvertKit) form ID here.
+     Find it in Kit: Grow > Landing Pages & Forms > your form >
+     the number in the URL (app.kit.com/forms/XXXXXXX). See SETUP.md.
+     ========================================================= */
+  var KIT_FORM_UID = "YOUR_KIT_FORM_ID";
+
+  (function(){
+    var boxes  = Array.prototype.slice.call(document.querySelectorAll('.affirm'));
+    var form   = document.getElementById('signForm');
+    var btn    = document.getElementById('enterBtn');
+    var hint   = document.getElementById('gateHint');
+    var error  = document.getElementById('formError');
+    var confirm= document.getElementById('confirm');
+
+    // gate the Enter button on all eight checked
+    function refresh(){
+      var all = boxes.every(function(b){ return b.checked; });
+      btn.disabled = !all;
+      hint.style.display = all ? 'none' : 'block';
+    }
+    boxes.forEach(function(b){ b.addEventListener('change', refresh); });
+    refresh();
+
+    // submit to Kit, then reveal the in-page confirmation
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      if (boxes.some(function(b){ return !b.checked; })) return;
+      error.style.display = 'none';
+      btn.disabled = true; btn.textContent = 'Entering…';
+
+      var endpoint = 'https://app.kit.com/forms/' + KIT_FORM_UID + '/subscriptions';
+      var data = new FormData(form);
+
+      fetch(endpoint, { method:'POST', body:data, mode:'no-cors' })
+        .then(function(){ showConfirm(); })
+        .catch(function(){
+          // no-cors gives an opaque response; treat reaching Kit as success.
+          showConfirm();
+        });
+    });
+
+    function showConfirm(){
+      form.style.display = 'none';
+      confirm.style.display = 'block';
+      confirm.scrollIntoView({ behavior:'smooth', block:'center' });
+    }
+  })();
+</script>
+</body>
+</html>
